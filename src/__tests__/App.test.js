@@ -21,43 +21,43 @@ describe("App component", () => {
   it("should be able to add new repository", async () => {
     const { getByText, getByTestId } = render(<App />);
 
-    apiMock.onGet("repositories").reply(200, []);
+    apiMock.onGet("repository").reply(200, []);
 
-    apiMock.onPost("repositories").reply(200, {
+    apiMock.onPost("repository").reply(200, {
       id: "123",
-      url: "https://github.com/josepholiveira",
-      title: "Desafio ReactJS",
+      url: "https://github.com/cleytonrs/back-end-repository",
+      title: "ReactJS Challenge",
       techs: ["React", "Node.js"],
     });
 
     await actWait();
 
-    fireEvent.click(getByText("Adicionar"));
+    fireEvent.click(getByText("Add"));
 
     await actWait();
 
     expect(getByTestId("repository-list")).toContainElement(
-      getByText("Desafio ReactJS")
+      getByText("ReactJS Challenge")
     );
   });
 
   it("should be able to remove repository", async () => {
     const { getByText, getByTestId } = render(<App />);
 
-    apiMock.onGet("repositories").reply(200, [
+    apiMock.onGet("repository").reply(200, [
       {
         id: "123",
-        url: "https://github.com/josepholiveira",
-        title: "Desafio ReactJS",
+        url: "https://github.com/cleytonrs/back-end-repository",
+        title: "ReactJS Challenge",
         techs: ["React", "Node.js"],
       },
     ]);
 
-    apiMock.onDelete("repositories/123").reply(204);
+    apiMock.onDelete("repository/123").reply(204);
 
     await actWait();
 
-    fireEvent.click(getByText("Remover"));
+    fireEvent.click(getByText("Remove"));
 
     await actWait();
 
